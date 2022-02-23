@@ -18,8 +18,9 @@ function setup() {
   socket.on("Clientmouse", (data) => {
     console.log(data.RGB);
     noStroke();
-    fill(data.RGB);
-    rect(data.XPos, data.YPos, data.Slider, data.Slider);
+    // fill(data.RGB);
+    // rect(data.XPos, data.YPos, data.Slider, data.Slider);
+    stroke(data.RGB);
     strokeWeight(data.Slider);
     line(data.XPos, data.YPos, data.PXPos, data.PYPos);
   });
