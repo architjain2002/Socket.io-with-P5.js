@@ -5,6 +5,7 @@ let usersMouse = [];
 function setup() {
   createCanvas(window.screen.width - 100, window.screen.height - 300);
   createP();
+  //   frameRate(20);
   slider = createSlider(1, 20, 10);
   eraser = createButton("clear");
   eraser.mousePressed(changeBG);
@@ -54,6 +55,19 @@ function setup() {
 }
 
 function draw() {
+  noStroke();
+  fill(30, 30, 30, 90);
+  for (let users of usersMouse) {
+    //draw each ship
+    triangle(
+      users.XPos - 10,
+      users.YPos,
+      users.XPos,
+      users.YPos - 20,
+      users.XPos + 10,
+      users.YPos
+    );
+  }
   radius = slider.value();
   /*
   if (mouseIsPressed && mouseX<400) {
