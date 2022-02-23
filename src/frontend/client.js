@@ -15,6 +15,11 @@ function setup() {
   socket.on("connect", () => {
     console.log("we are connected to the server");
   });
+  socket.on("Clientmouse", (data) => {
+    noStroke();
+    fill(255, 0, 100);
+    rect(data.XPos, data.YPos, data.Slider, data.Slider);
+  });
 }
 
 function draw() {
@@ -56,6 +61,7 @@ function mouseDragged() {
   let data = {
     XPos: mouseX,
     YPos: mouseY,
+    Slider: slider.value(),
   };
   socket.emit("Clientmouse", data);
 }
