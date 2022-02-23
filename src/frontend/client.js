@@ -16,9 +16,8 @@ function setup() {
     console.log("we are connected to the server");
   });
   socket.on("Clientmouse", (data) => {
-    console.log(data);
+    console.log(data.RGB);
     noStroke();
-    // console.log(data.RGB);
     fill(data.RGB);
     rect(data.XPos, data.YPos, data.Slider, data.Slider);
   });
