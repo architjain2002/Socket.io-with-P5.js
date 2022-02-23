@@ -1,6 +1,7 @@
 const socket = io("http://localhost:5500");
 var radius;
 var c;
+let usersMouse = [];
 function setup() {
   createCanvas(window.screen.width - 100, window.screen.height - 300);
   createP();
@@ -15,7 +16,33 @@ function setup() {
   socket.on("connect", () => {
     console.log("we are connected to the server");
   });
+  myUser = {
+    XPos: 0,
+    YPos: 0,
+    PXPos: 0,
+    PYPos: 0,
+    Slider: 0,
+    RGB: [0, 0, 0, 0],
+    name: prompt("Name for your battleship?"),
+  };
+  usersMouse.push(myUser);
   socket.on("Clientmouse", (data) => {
+    //see if ship already exists
+    let bs = usersMouse.filter((d) => d.name == data.name);
+
+    if (bs.length == 0) {
+      //if a new ship, create a new one
+      usersMouse.push(data);
+    } else {
+      //if exists, then update its data
+      bs[0].XPos = data.XPos;
+      bs[0].YPos = data.YPos;
+      bs[0].PXPos = data.PXPos;
+      bs[0].PYPos = data.PYPos;
+      bs[0].Slider = data.Slider;
+      bs[0].RGB = data.RGB;
+    }
+
     console.log(data.RGB);
     noStroke();
     // fill(data.RGB);
@@ -62,15 +89,21 @@ function mouseDragged() {
     strokeWeight(slider.value());
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
-  let data = {
-    XPos: mouseX,
-    YPos: mouseY,
-    PXPos: pmouseX,
-    PYPos: pmouseY,
-    Slider: slider.value(),
-    RGB: c,
-  };
-  socket.emit("Clientmouse", data);
+  //   let data = {
+  //     XPos: mouseX,
+  //     YPos: mouseY,
+  //     PXPos: pmouseX,
+  //     PYPos: pmouseY,
+  //     Slider: slider.value(),
+  //     RGB: c,
+  //   };
+  myUser.XPos = mouseX;
+  myUser.YPos = mouseY;
+  myUser.PXPos = pmouseX;
+  myUser.PYPos = pmouseY;
+  myUser.Slider = slider.value();
+  myUser.RGB = c;
+  socket.emit("Clientmouse", myUser);
 }
 
 function changeBG() {
