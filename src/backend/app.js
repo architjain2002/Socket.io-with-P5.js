@@ -8,6 +8,9 @@ const server = createServer(app);
 const io = require("socket.io")(server, { cors: { origin: "*" } });
 io.on("connection", (socket) => {
   console.log("new connection" + socket.id);
+  socket.on("Clientmouse", (data) => {
+    console.log("Clients Mouse data:" + JSON.stringify(data));
+  });
 });
 
 server.listen(5500, () => {
