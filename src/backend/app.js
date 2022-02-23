@@ -10,6 +10,7 @@ io.on("connection", (socket) => {
   console.log("new connection" + socket.id);
   socket.on("Clientmouse", (data) => {
     console.log("Clients Mouse data:" + JSON.stringify(data));
+    socket.broadcast.emit("Clientmouse", data);
   });
 });
 
