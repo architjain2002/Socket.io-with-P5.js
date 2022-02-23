@@ -1,3 +1,4 @@
+const socket = io("http://localhost:5500");
 var radius;
 var c;
 function setup() {
@@ -11,7 +12,6 @@ function setup() {
   background(255);
   colorMode(RGB);
   createColorPickerHandle();
-  const socket = io("http://localhost:5500");
   socket.on("connect", () => {
     console.log("we are connected to the server");
   });
@@ -53,6 +53,11 @@ function mouseDragged() {
     strokeWeight(slider.value());
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
+  let data = {
+    XPos: mouseX,
+    YPos: mouseY,
+  };
+  socket.emit("Clientmouse", data);
 }
 
 function changeBG() {
