@@ -1,6 +1,5 @@
 var radius;
 var c;
-
 function setup() {
   createCanvas(window.screen.width - 100, window.screen.height - 300);
   createP();
@@ -12,6 +11,10 @@ function setup() {
   background(255);
   colorMode(RGB);
   createColorPickerHandle();
+  const socket = io("http://localhost:5500");
+  socket.on("connect", () => {
+    console.log("we are connected to the server");
+  });
 }
 
 function draw() {
