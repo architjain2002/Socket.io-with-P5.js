@@ -20,6 +20,8 @@ function setup() {
     noStroke();
     fill(data.RGB);
     rect(data.XPos, data.YPos, data.Slider, data.Slider);
+    strokeWeight(data.Slider);
+    line(data.XPos, data.YPos, data.PXPos, data.PYPos);
   });
 }
 
@@ -62,6 +64,8 @@ function mouseDragged() {
   let data = {
     XPos: mouseX,
     YPos: mouseY,
+    PXPos: pmouseX,
+    PYPos: pmouseY,
     Slider: slider.value(),
     RGB: c,
   };
